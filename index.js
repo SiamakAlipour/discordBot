@@ -28,31 +28,18 @@ const client = new Client({
 });
 const removeRole = async (message, role) => {
 	const role5Runs = getRoles(message, rolesOfServer['5-runs']);
-
 	const role10Runs = getRoles(message, rolesOfServer['10-runs']);
-
 	const role15Runs = getRoles(message, rolesOfServer['15-runs']);
-
 	const role20Runs = getRoles(message, rolesOfServer['20-runs']);
-
 	const roleVariable = getRoles(message, rolesOfServer.variable);
-
 	const roleOnTime = getRoles(message, rolesOfServer.onTime);
-
 	const roleTimeFrame = getRoles(message, rolesOfServer.timeFrame);
-
 	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
-
 	const maraudonRole = getRoles(message, 'Maraudon');
-
 	const startholmeRole = getRoles(message, 'Startholme');
-
 	const slavePensRole = getRoles(message, 'Slave Pens');
-
 	const shadowLabRole = getRoles(message, 'Shadow Lab');
-
 	const steamVaultRole = getRoles(message, 'Steam Vault');
-
 	let members = await message.guild.members.fetch();
 	return members
 		.filter((member) => member.roles.cache.has(role.id))
@@ -259,24 +246,18 @@ client.on('message', async (message) => {
 			'dQY@+#sc+@wHVzq6B4%SxzCN!UZx@vH2prS3jh&z!8fmZ^x%$8pY#EWVdh2j+gHX-&^-r^WrTEXm*?9gZsq4PWap6LBe$-_b$kpDxQ_S9a?dfv2NfPR5QuB$eHHAV8xU'
 		)
 	) {
-		// type of reserve roles
-
-		// reserves times roles
-
 		const role9_12 = getRoles(message, '9-12');
 		const role12_15 = getRoles(message, '12-15');
 		const role15_18 = getRoles(message, '15-18');
 		const role18_21 = getRoles(message, '18-21');
 		const role21_0 = getRoles(message, '21-0');
 		const role0_3 = getRoles(message, '0-3');
-
 		const roleMembers9_12 = getMembers(message, role9_12);
 		const roleMembers12_15 = getMembers(message, role12_15);
 		const roleMembers15_18 = getMembers(message, role15_18);
 		const roleMembers18_21 = getMembers(message, role18_21);
 		const roleMembers21_0 = getMembers(message, role21_0);
 		const roleMembers0_3 = getMembers(message, role0_3);
-
 		message.guild.channels.cache
 			.get(botChannelId)
 			.send(
@@ -295,7 +276,6 @@ client.on('message', async (message) => {
 		const slavePensRole = getRoles(message, 'Slave Pens');
 		const shadowLabRole = getRoles(message, 'Shadow Lab');
 		const steamVaultRole = getRoles(message, 'Steam Vault');
-
 		//members
 		const scarletMonasteryRoleMembers = getMembers(
 			message,
@@ -327,8 +307,4 @@ client.on('message', async (message) => {
 		);
 	}
 });
-
-// Define Channel
-
-// Login to Discord with your client's token
 client.login(token);
