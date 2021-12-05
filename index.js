@@ -1,8 +1,16 @@
 // Require the necessary discord.js classes
 const { Client, Intents } = require('discord.js');
-const { token, botChannelId, adminId, messageAlert } = require('./config.json');
-
+const {
+	token,
+	botChannelId,
+	adminId,
+	messageAlert,
+	rolesOfServer,
+} = require('./config.json');
+const moment = require('moment');
 const time = new Date();
+
+let date = new Date();
 let hour = time.getHours();
 
 // Create a new client instance
@@ -18,47 +26,157 @@ const client = new Client({
 		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 	],
 });
-const removeRole = (message, role) => {
-	const role2 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === '5-runs'
-	);
-	const role3 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === '10-runs'
-	);
-	const role4 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === '15-runs'
-	);
-	const role5 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === '20-runs'
-	);
-	const role6 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === 'variable'
-	);
-	const role7 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === 'onTime'
-	);
-	const role8 = message.guild.roles.cache.find(
-		(r) => r.name.toLowerCase() === 'timeFrame'
-	);
+const removeRole = async (message, role) => {
+	const role5Runs = getRoles(message, rolesOfServer['5-runs']);
+
+	const role10Runs = getRoles(message, rolesOfServer['10-runs']);
+
+	const role15Runs = getRoles(message, rolesOfServer['15-runs']);
+
+	const role20Runs = getRoles(message, rolesOfServer['20-runs']);
+
+	const roleVariable = getRoles(message, rolesOfServer.variable);
+
+	const roleOnTime = getRoles(message, rolesOfServer.onTime);
+
+	const roleTimeFrame = getRoles(message, rolesOfServer.timeFrame);
+
+	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
+
+	const maraudonRole = getRoles(message, 'Maraudon');
+
+	const startholmeRole = getRoles(message, 'Startholme');
+
+	const slavePensRole = getRoles(message, 'Slave Pens');
+
+	const shadowLabRole = getRoles(message, 'Shadow Lab');
+
+	const steamVaultRole = getRoles(message, 'Steam Vault');
+
 	let members = await message.guild.members.fetch();
 	return members
 		.filter((member) => member.roles.cache.has(role.id))
 		.forEach((member) => {
 			member.roles.remove(role.id);
-			member.roles.remove(role2.id);
-			member.roles.remove(role3.id);
-			member.roles.remove(role4.id);
-			member.roles.remove(role5.id);
-			member.roles.remove(role6.id);
-			member.roles.remove(role7.id);
-			member.roles.remove(role8.id);
+			member.roles.remove(role5Runs.id);
+			member.roles.remove(role10Runs.id);
+			member.roles.remove(role15Runs.id);
+			member.roles.remove(role20Runs.id);
+			member.roles.remove(roleVariable.id);
+			member.roles.remove(roleOnTime.id);
+			member.roles.remove(roleTimeFrame.id);
+			member.roles.remove(scarletMonasteryRole.id);
+			member.roles.remove(maraudonRole.id);
+			member.roles.remove(startholmeRole.id);
+			member.roles.remove(slavePensRole.id);
+			member.roles.remove(shadowLabRole.id);
+			member.roles.remove(steamVaultRole.id);
 		});
 };
-
+const getRoles = (message, roleName) => {
+	return message.guild.roles.cache.find((role) => role.name == roleName);
+};
 const getMembers = (message, roleName) => {
 	return message.guild.members.cache
 		.filter((member) => member.roles.cache.find((role) => role == roleName))
-		.map((member) => member.user.tag);
+		.map((member) => member.nickname || member.user.tag);
+};
+const getServices = (message, roleServices, types) => {
+	if (
+		types.scarletMonasteryRoleMembers.length == 0 &&
+		types.maraudonRoleMembers.length == 0 &&
+		types.startholmeRoleMembers == 0 &&
+		types.slavePensRoleMembers == 0 &&
+		types.shadowLabRoleMembers == 0 &&
+		types.steamVaultRoleMembers == 0
+	) {
+		message.guild.channels.cache
+			.get(botChannelId)
+			.send(
+				`--------------${moment().format(
+					'YYYY-MM-DD'
+				)}-------------------\n No user selected services \n----------------------------------------------`
+			);
+	} else {
+		if (types.scarletMonasteryRoleMembers.length > 0) {
+			message.guild.channels.cache
+				.get(botChannelId)
+				.send(
+					`--------------${moment().format(
+						'YYYY-MM-DD'
+					)}-------------------\n\t\t\t\t${
+						roleServices.scarletMonasteryRole
+					} Users\n\n${
+						types.scarletMonasteryRoleMembers
+					}\n----------------------------------------------`
+				);
+		}
+		if (types.maraudonRoleMembers.length > 0) {
+			message.guild.channels.cache
+				.get(botChannelId)
+				.send(
+					`--------------${moment().format(
+						'YYYY-MM-DD'
+					)}-------------------\n\t\t\t\t${
+						roleServices.maraudonRole
+					} Users\n\n${
+						types.maraudonRoleMembers
+					}\n----------------------------------------------`
+				);
+		}
+		if (types.startholmeRoleMembers.length > 0) {
+			message.guild.channels.cache
+				.get(botChannelId)
+				.send(
+					`--------------${moment().format(
+						'YYYY-MM-DD'
+					)}-------------------\n\t\t\t\t${
+						roleServices.startholmeRole
+					} Users\n\n${
+						types.startholmeRoleMembers
+					}\n----------------------------------------------`
+				);
+		}
+		if (types.slavePensRoleMembers.length > 0) {
+			message.guild.channels.cache
+				.get(botChannelId)
+				.send(
+					`--------------${moment().format(
+						'YYYY-MM-DD'
+					)}-------------------\n\t\t\t\t${
+						roleServices.slavePensRole
+					} Users\n\n${
+						types.slavePensRoleMembers
+					}\n----------------------------------------------`
+				);
+		}
+		if (types.shadowLabRoleMembers.length > 0) {
+			message.guild.channels.cache
+				.get(botChannelId)
+				.send(
+					`--------------${moment().format(
+						'YYYY-MM-DD'
+					)}-------------------\n\t\t\t\t${
+						roleServices.shadowLabRole
+					} Users\n\n${
+						types.shadowLabRoleMembers
+					}\n----------------------------------------------`
+				);
+		}
+		if (types.steamVaultRoleMembers.length > 0) {
+			message.guild.channels.cache
+				.get(botChannelId)
+				.send(
+					`--------------${moment().format(
+						'YYYY-MM-DD'
+					)}-------------------\n\t\t\t\t${
+						roleServices.steamVaultRole
+					} users\n\n${
+						types.steamVaultRoleMembers
+					}\n----------------------------------------------`
+				);
+		}
+	}
 };
 client.on('message', async (message) => {
 	if (
@@ -135,30 +253,22 @@ client.on('message', async (message) => {
 	}
 
 	if (
-		(message.content.startsWith('list') &&
+		(message.content.startsWith('!time') &&
 			message.member.roles.cache.has(adminId)) ||
 		message.content.startsWith(
 			'dQY@+#sc+@wHVzq6B4%SxzCN!UZx@vH2prS3jh&z!8fmZ^x%$8pY#EWVdh2j+gHX-&^-r^WrTEXm*?9gZsq4PWap6LBe$-_b$kpDxQ_S9a?dfv2NfPR5QuB$eHHAV8xU'
 		)
 	) {
-		const role9_12 = message.guild.roles.cache.find(
-			(role) => role.name == '9-12'
-		);
-		const role12_15 = message.guild.roles.cache.find(
-			(role) => role.name == '12-15'
-		);
-		const role15_18 = message.guild.roles.cache.find(
-			(role) => role.name == '15-18'
-		);
-		const role18_21 = message.guild.roles.cache.find(
-			(role) => role.name == '18-21'
-		);
-		const role21_0 = message.guild.roles.cache.find(
-			(role) => role.name == '21-0'
-		);
-		const role0_3 = message.guild.roles.cache.find(
-			(role) => role.name == '0-3'
-		);
+		// type of reserve roles
+
+		// reserves times roles
+
+		const role9_12 = getRoles(message, '9-12');
+		const role12_15 = getRoles(message, '12-15');
+		const role15_18 = getRoles(message, '15-18');
+		const role18_21 = getRoles(message, '18-21');
+		const role21_0 = getRoles(message, '21-0');
+		const role0_3 = getRoles(message, '0-3');
 
 		const roleMembers9_12 = getMembers(message, role9_12);
 		const roleMembers12_15 = getMembers(message, role12_15);
@@ -169,22 +279,52 @@ client.on('message', async (message) => {
 
 		message.guild.channels.cache
 			.get(botChannelId)
-			.send(`Users with ${role9_12}: ${roleMembers9_12}`);
-		message.guild.channels.cache
-			.get(botChannelId)
-			.send(`Users with ${role12_15}: ${roleMembers12_15}`);
-		message.guild.channels.cache
-			.get(botChannelId)
-			.send(`Users with ${role15_18}: ${roleMembers15_18}`);
-		message.guild.channels.cache
-			.get(botChannelId)
-			.send(`Users with ${role18_21}: ${roleMembers18_21}`);
-		message.guild.channels.cache
-			.get(botChannelId)
-			.send(`Users with ${role21_0}: ${roleMembers21_0}`);
-		message.guild.channels.cache
-			.get(botChannelId)
-			.send(`Users with ${role0_3}: ${roleMembers0_3}`);
+			.send(
+				`--------------${moment().format(
+					'YYYY-MM-DD'
+				)}-------------------\n\t\t\t\t\t\tUsers Time\n\nUsers with ${role9_12}: ${roleMembers9_12}\nUsers with ${role12_15}: ${roleMembers12_15}\nUsers with ${role15_18}: ${roleMembers15_18}\nUsers with ${role18_21}: ${roleMembers18_21}\nUsers with ${role21_0}: ${roleMembers21_0}\nUsers with ${role0_3}: ${roleMembers0_3}\n----------------------------------------------`
+			);
+	} else if (
+		message.content.startsWith('!service') &&
+		message.member.roles.cache.has(adminId)
+	) {
+		// roles
+		const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
+		const maraudonRole = getRoles(message, 'Maraudon');
+		const startholmeRole = getRoles(message, 'Startholme');
+		const slavePensRole = getRoles(message, 'Slave Pens');
+		const shadowLabRole = getRoles(message, 'Shadow Lab');
+		const steamVaultRole = getRoles(message, 'Steam Vault');
+
+		//members
+		const scarletMonasteryRoleMembers = getMembers(
+			message,
+			scarletMonasteryRole
+		);
+		const maraudonRoleMembers = getMembers(message, maraudonRole);
+		const startholmeRoleMembers = getMembers(message, startholmeRole);
+		const slavePensRoleMembers = getMembers(message, slavePensRole);
+		const shadowLabRoleMembers = getMembers(message, shadowLabRole);
+		const steamVaultRoleMembers = getMembers(message, steamVaultRole);
+		getServices(
+			message,
+			{
+				scarletMonasteryRole,
+				maraudonRole,
+				startholmeRole,
+				slavePensRole,
+				shadowLabRole,
+				steamVaultRole,
+			},
+			{
+				scarletMonasteryRoleMembers,
+				maraudonRoleMembers,
+				startholmeRoleMembers,
+				slavePensRoleMembers,
+				shadowLabRoleMembers,
+				steamVaultRoleMembers,
+			}
+		);
 	}
 });
 
