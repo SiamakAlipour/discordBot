@@ -1,22 +1,22 @@
 {
-  "name": "sendmessagebot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "nodemon index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@discordjs/builders": "^0.9.0",
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "cron": "^1.8.2",
-    "discord-api-types": "^0.25.2",
-    "discord.js": "^13.3.1",
-    "discord.js-12": "^1.0.2",
-    "nodemon": "^2.0.15"
-  }
+	"name": "sendmessagebot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@discordjs/builders": "^0.9.0",
+		"@discordjs/rest": "^0.1.0-canary.0",
+		"cron": "^1.8.2",
+		"discord-api-types": "^0.25.2",
+		"discord.js": "^13.3.1",
+		"discord.js-12": "^1.0.2",
+		"nodemon": "^2.0.15"
+	}
 }
