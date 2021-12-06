@@ -34,12 +34,7 @@ const removeRole = async (message, role) => {
 	const roleVariable = getRoles(message, rolesOfServer.variable);
 	const roleOnTime = getRoles(message, rolesOfServer.onTime);
 	const roleTimeFrame = getRoles(message, rolesOfServer.timeFrame);
-	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
-	const maraudonRole = getRoles(message, 'Maraudon');
-	const startholmeRole = getRoles(message, 'Startholme');
-	const slavePensRole = getRoles(message, 'Slave Pens');
-	const shadowLabRole = getRoles(message, 'Shadow Lab');
-	const steamVaultRole = getRoles(message, 'Steam Vault');
+
 	let members = await message.guild.members.fetch();
 	return members
 		.filter((member) => member.roles.cache.has(role.id))
@@ -165,7 +160,29 @@ const getServices = (message, roleServices, types) => {
 		}
 	}
 };
+
 client.on('message', async (message) => {
+	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
+	const maraudonRole = getRoles(message, 'Maraudon');
+	const startholmeRole = getRoles(message, 'Startholme');
+	const slavePensRole = getRoles(message, 'Slave Pens');
+	const shadowLabRole = getRoles(message, 'Shadow Lab');
+	const steamVaultRole = getRoles(message, 'Steam Vault');
+	const role9_12 = getRoles(message, '9-12');
+	const role12_15 = getRoles(message, '12-15');
+	const role15_18 = getRoles(message, '15-18');
+	const role18_21 = getRoles(message, '18-21');
+	const role21_0 = getRoles(message, '21-0');
+	const role0_3 = getRoles(message, '0-3');
+	const scarletMonasteryRoleMembers = getMembers(
+		message,
+		scarletMonasteryRole
+	);
+	const maraudonRoleMembers = getMembers(message, maraudonRole);
+	const startholmeRoleMembers = getMembers(message, startholmeRole);
+	const slavePensRoleMembers = getMembers(message, slavePensRole);
+	const shadowLabRoleMembers = getMembers(message, shadowLabRole);
+	const steamVaultRoleMembers = getMembers(message, steamVaultRole);
 	if (
 		message.content.startsWith(
 			'dQY@+#sc+@wHVzq6B4%SxzCN!UZx@vH2prS3jh&z!8fmZ^x%$8pY#EWVdh2j+gHX-&^-r^WrTEXm*?9gZsq4PWap6LBe$-_b$kpDxQ_S9a?dfv2NfPR5QuB$eHHAV8xU'
@@ -246,12 +263,6 @@ client.on('message', async (message) => {
 			'dQY@+#sc+@wHVzq6B4%SxzCN!UZx@vH2prS3jh&z!8fmZ^x%$8pY#EWVdh2j+gHX-&^-r^WrTEXm*?9gZsq4PWap6LBe$-_b$kpDxQ_S9a?dfv2NfPR5QuB$eHHAV8xU'
 		)
 	) {
-		const role9_12 = getRoles(message, '9-12');
-		const role12_15 = getRoles(message, '12-15');
-		const role15_18 = getRoles(message, '15-18');
-		const role18_21 = getRoles(message, '18-21');
-		const role21_0 = getRoles(message, '21-0');
-		const role0_3 = getRoles(message, '0-3');
 		const roleMembers9_12 = getMembers(message, role9_12);
 		const roleMembers12_15 = getMembers(message, role12_15);
 		const roleMembers15_18 = getMembers(message, role15_18);
@@ -270,22 +281,9 @@ client.on('message', async (message) => {
 		message.member.roles.cache.has(adminId)
 	) {
 		// roles
-		const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
-		const maraudonRole = getRoles(message, 'Maraudon');
-		const startholmeRole = getRoles(message, 'Startholme');
-		const slavePensRole = getRoles(message, 'Slave Pens');
-		const shadowLabRole = getRoles(message, 'Shadow Lab');
-		const steamVaultRole = getRoles(message, 'Steam Vault');
+
 		//members
-		const scarletMonasteryRoleMembers = getMembers(
-			message,
-			scarletMonasteryRole
-		);
-		const maraudonRoleMembers = getMembers(message, maraudonRole);
-		const startholmeRoleMembers = getMembers(message, startholmeRole);
-		const slavePensRoleMembers = getMembers(message, slavePensRole);
-		const shadowLabRoleMembers = getMembers(message, shadowLabRole);
-		const steamVaultRoleMembers = getMembers(message, steamVaultRole);
+
 		getServices(
 			message,
 			{
@@ -305,6 +303,28 @@ client.on('message', async (message) => {
 				steamVaultRoleMembers,
 			}
 		);
+	} else if (
+		message.channel.id === '916689635386732544' &&
+		(message.content.startsWith('!changenick') ||
+			message.content.startsWith('!removenick'))
+	) {
+		let messageSplit = message.content.split(' ');
+		if (messageSplit[0] === '!changenick' && !messageSplit[1]) {
+			message.channel.send('notAllowed');
+		} else if (messageSplit[0] === '!changenick' && messageSplit[1]) {
+			message.member.setNickname(messageSplit[1]);
+		} else if (messageSplit[0] === '!removenick') {
+			message.member.setNickname('');
+		}
+	} else if (
+		message.channel.id === '916689635386732544' &&
+		(!message.content.startsWith('!changenick') ||
+			!message.content.startsWith('!removenick'))
+	) {
+		clearTimeout();
+		setTimeout(() => {
+			message.delete();
+		}, 1500);
 	}
 });
 client.login(token);
