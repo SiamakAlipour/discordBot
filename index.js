@@ -6,14 +6,15 @@ const {
 	adminId,
 	messageAlert,
 	rolesOfServer,
+	botActivateMessageToken,
 } = require('./config.json');
 const moment = require('moment');
+const cron = require('cron');
 const time = new Date();
 
 let date = new Date();
 let hour = time.getHours();
 
-// Create a new client instance
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
@@ -26,6 +27,12 @@ const client = new Client({
 		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 	],
 });
+let scheduledMessage = new cron.CronJob('0 0-21/3 * * *', () => {
+	let channel = client.channels.cache.get('915137690104647731');
+	channel.send(botActivateMessageToken);
+});
+// Create a new client instance
+scheduledMessage.start();
 const removeRole = async (message, role) => {
 	const role5Runs = getRoles(message, rolesOfServer['5-runs']);
 	const role10Runs = getRoles(message, rolesOfServer['10-runs']);
@@ -161,7 +168,7 @@ const getServices = (message, roleServices, types) => {
 	}
 };
 
-client.on('message', async (message) => {
+client.on('messageCreate', async (message) => {
 	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
 	const maraudonRole = getRoles(message, 'Maraudon');
 	const startholmeRole = getRoles(message, 'Startholme');
@@ -183,74 +190,250 @@ client.on('message', async (message) => {
 	const slavePensRoleMembers = getMembers(message, slavePensRole);
 	const shadowLabRoleMembers = getMembers(message, shadowLabRole);
 	const steamVaultRoleMembers = getMembers(message, steamVaultRole);
-	if (
-		message.content.startsWith(
-			'dQY@+#sc+@wHVzq6B4%SxzCN!UZx@vH2prS3jh&z!8fmZ^x%$8pY#EWVdh2j+gHX-&^-r^WrTEXm*?9gZsq4PWap6LBe$-_b$kpDxQ_S9a?dfv2NfPR5QuB$eHHAV8xU'
-		)
-	) {
-		if (hour >= 9 && hour < 12) {
+	if (message.content.startsWith(botActivateMessageToken)) {
+		if (hour === 9) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
-					role.name == '9-12'
+					role.name == '9'
 						? e.send(`Time ${role.name} : ${messageAlert}`)
 						: null
 				);
 			});
 			const role = message.guild.roles.cache.find(
-				(r) => r.name.toLowerCase() === '0-3'
+				(r) => r.name.toLowerCase() === '6'
 			);
 			removeRole(message, role);
-		} else if (hour >= 12 && hour < 15) {
+		} else if (hour === 10) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
-					role.name == '12-15'
+					role.name == '10'
 						? e.send(`Time ${role.name} : ${messageAlert}`)
 						: null
 				);
 			});
 			const role = message.guild.roles.cache.find(
-				(r) => r.name.toLowerCase() === '9-12'
+				(r) => r.name.toLowerCase() === '9'
 			);
 			removeRole(message, role);
-		} else if (hour >= 15 && hour < 18) {
+		} else if (hour === 11) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
-					role.name == '15-18'
+					role.name == '11'
 						? e.send(`Time ${role.name} : ${messageAlert}`)
 						: null
 				);
 			});
 			const role = message.guild.roles.cache.find(
-				(r) => r.name.toLowerCase() === '12-15'
+				(r) => r.name.toLowerCase() === '10'
 			);
 			removeRole(message, role);
-		} else if (hour >= 18 && hour < 21) {
+		} else if (hour === 12) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
-					role.name == '18-21'
+					role.name == '12'
 						? e.send(`Time ${role.name} : ${messageAlert}`)
 						: null
 				);
 			});
 			const role = message.guild.roles.cache.find(
-				(r) => r.name.toLowerCase() === '15-18'
+				(r) => r.name.toLowerCase() === '11'
 			);
 			removeRole(message, role);
-		} else if (hour >= 21 && hour < 0) {
+		} else if (hour === 13) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
-					role.name == '21-0'
+					role.name == '13'
 						? e.send(`Time ${role.name} : ${messageAlert}`)
 						: null
 				);
 			});
 			const role = message.guild.roles.cache.find(
-				(r) => r.name.toLowerCase() === '18-21'
+				(r) => r.name.toLowerCase() === '12'
 			);
 			removeRole(message, role);
-		} else if (hour >= 3 && hour < 6) {
+		} else if (hour === 14) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '14'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
 			const role = message.guild.roles.cache.find(
-				(r) => r.name.toLowerCase() === '0-3'
+				(r) => r.name.toLowerCase() === '13'
+			);
+			removeRole(message, role);
+		} else if (hour === 15) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '15'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '14'
+			);
+			removeRole(message, role);
+		} else if (hour === 16) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '16'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '15'
+			);
+			removeRole(message, role);
+		} else if (hour === 17) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '17'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '16'
+			);
+			removeRole(message, role);
+		} else if (hour === 18) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '18'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '17'
+			);
+			removeRole(message, role);
+		} else if (hour === 19) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '19'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '18'
+			);
+			removeRole(message, role);
+		} else if (hour === 20) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '20'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '19'
+			);
+			removeRole(message, role);
+		} else if (hour === 21) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '21'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '20'
+			);
+			removeRole(message, role);
+		} else if (hour === 22) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '22'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '21'
+			);
+			removeRole(message, role);
+		} else if (hour === 23) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '23'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '22'
+			);
+			removeRole(message, role);
+		} else if (hour === 0) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '0'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '23'
+			);
+			removeRole(message, role);
+		} else if (hour === 1) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '1'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '0'
+			);
+			removeRole(message, role);
+		} else if (hour === 2) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '2'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '1'
+			);
+			removeRole(message, role);
+		} else if (hour === 3) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '3'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '2'
+			);
+			removeRole(message, role);
+		} else if (hour === 3) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '3'
+						? e.send(`Time ${role.name} : ${messageAlert}`)
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '2'
+			);
+			removeRole(message, role);
+		} else if (hour === 4) {
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '3'
 			);
 			removeRole(message, role);
 		}
@@ -259,9 +442,7 @@ client.on('message', async (message) => {
 	if (
 		(message.content.startsWith('!time') &&
 			message.member.roles.cache.has(adminId)) ||
-		message.content.startsWith(
-			'dQY@+#sc+@wHVzq6B4%SxzCN!UZx@vH2prS3jh&z!8fmZ^x%$8pY#EWVdh2j+gHX-&^-r^WrTEXm*?9gZsq4PWap6LBe$-_b$kpDxQ_S9a?dfv2NfPR5QuB$eHHAV8xU'
-		)
+		message.content.startsWith(botActivateMessageToken)
 	) {
 		const roleMembers9_12 = getMembers(message, role9_12);
 		const roleMembers12_15 = getMembers(message, role12_15);
