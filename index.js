@@ -27,7 +27,7 @@ const client = new Client({
 		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 	],
 });
-let scheduledMessage = new cron.CronJob('0 0-21/3 * * *', () => {
+let scheduledMessage = new cron.CronJob('2 0-21/3 * * *', () => {
 	let channel = client.channels.cache.get('915137690104647731');
 	channel.send(botActivateMessageToken);
 });
@@ -174,6 +174,7 @@ const getServices = (message, roleServices, types) => {
 };
 
 client.on('messageCreate', async (message) => {
+	console.log(hour);
 	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
 	const maraudonRole = getRoles(message, 'Maraudon');
 	const startholmeRole = getRoles(message, 'Stratholme');
@@ -267,7 +268,7 @@ client.on('messageCreate', async (message) => {
 				(r) => r.name.toLowerCase() === '18-21'
 			);
 			removeRole(message, role);
-		} else if (hour >= 21 && hour < 0) {
+		} else if (hour >= 0 && hour < 3) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '0-3'
