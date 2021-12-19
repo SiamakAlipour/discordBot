@@ -10,7 +10,6 @@ const {
 } = require('./config.json');
 const moment = require('moment');
 const cron = require('cron');
-const time = new Date();
 
 const client = new Client({
 	intents: [
@@ -194,7 +193,7 @@ client.on('messageCreate', async (message) => {
 	const steamVaultRoleMembers = getMembers(message, steamVaultRole);
 	if (message.content.startsWith(botActivateMessageToken)) {
 		let date = new Date();
-		let hour = time.getHours();
+		let hour = date.getHours();
 		console.log(hour);
 		if (hour >= 9 && hour < 12) {
 			message.guild.members.cache.map((e) => {
