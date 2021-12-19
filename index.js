@@ -41,7 +41,12 @@ const removeRole = async (message, role) => {
 	const roleVariable = getRoles(message, rolesOfServer.variable);
 	const roleOnTime = getRoles(message, rolesOfServer.onTime);
 	const roleTimeFrame = getRoles(message, rolesOfServer.timeFrame);
-
+	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
+	const maraudonRole = getRoles(message, 'Maraudon');
+	const startholmeRole = getRoles(message, 'Stratholme');
+	const slavePensRole = getRoles(message, 'Slave Pens');
+	const shadowLabRole = getRoles(message, 'Shadow Lab');
+	const steamVaultRole = getRoles(message, 'Steam Vault');
 	let members = await message.guild.members.fetch();
 	return members
 		.filter((member) => member.roles.cache.has(role.id))
@@ -171,7 +176,7 @@ const getServices = (message, roleServices, types) => {
 client.on('messageCreate', async (message) => {
 	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
 	const maraudonRole = getRoles(message, 'Maraudon');
-	const startholmeRole = getRoles(message, 'Startholme');
+	const startholmeRole = getRoles(message, 'Stratholme');
 	const slavePensRole = getRoles(message, 'Slave Pens');
 	const shadowLabRole = getRoles(message, 'Shadow Lab');
 	const steamVaultRole = getRoles(message, 'Steam Vault');
@@ -195,7 +200,9 @@ client.on('messageCreate', async (message) => {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '9-12'
-						? e.send(`Time ${role.name} : ${messageAlert}`)
+						? e
+								.send(`Time ${role.name} : ${messageAlert}`)
+								.catch((err) => console.log(err))
 						: null
 				);
 			});
@@ -207,7 +214,9 @@ client.on('messageCreate', async (message) => {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '12-15'
-						? e.send(`Time ${role.name} : ${messageAlert}`)
+						? e
+								.send(`Time ${role.name} : ${messageAlert}`)
+								.catch((err) => console.log(err))
 						: null
 				);
 			});
@@ -216,10 +225,13 @@ client.on('messageCreate', async (message) => {
 			);
 			removeRole(message, role);
 		} else if (hour >= 15 && hour < 18) {
+			console.log(hour);
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '15-18'
-						? e.send(`Time ${role.name} : ${messageAlert}`)
+						? e
+								.send(`Time ${role.name} : ${messageAlert}`)
+								.catch((err) => console.log(err))
 						: null
 				);
 			});
@@ -231,7 +243,9 @@ client.on('messageCreate', async (message) => {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '18-21'
-						? e.send(`Time ${role.name} : ${messageAlert}`)
+						? e
+								.send(`Time ${role.name} : ${messageAlert}`)
+								.catch((err) => console.log(err))
 						: null
 				);
 			});
@@ -243,12 +257,28 @@ client.on('messageCreate', async (message) => {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '21-0'
-						? e.send(`Time ${role.name} : ${messageAlert}`)
+						? e
+								.send(`Time ${role.name} : ${messageAlert}`)
+								.catch((err) => console.log(err))
 						: null
 				);
 			});
 			const role = message.guild.roles.cache.find(
 				(r) => r.name.toLowerCase() === '18-21'
+			);
+			removeRole(message, role);
+		} else if (hour >= 21 && hour < 0) {
+			message.guild.members.cache.map((e) => {
+				e.roles.cache.find((role) =>
+					role.name == '0-3'
+						? e
+								.send(`Time ${role.name} : ${messageAlert}`)
+								.catch((err) => console.log(err))
+						: null
+				);
+			});
+			const role = message.guild.roles.cache.find(
+				(r) => r.name.toLowerCase() === '21-0'
 			);
 			removeRole(message, role);
 		} else if (hour >= 3 && hour < 6) {
