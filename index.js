@@ -174,7 +174,6 @@ const getServices = (message, roleServices, types) => {
 };
 
 client.on('messageCreate', async (message) => {
-	console.log(hour);
 	const scarletMonasteryRole = getRoles(message, 'Scarlet Monastery');
 	const maraudonRole = getRoles(message, 'Maraudon');
 	const startholmeRole = getRoles(message, 'Stratholme');
@@ -197,6 +196,7 @@ client.on('messageCreate', async (message) => {
 	const shadowLabRoleMembers = getMembers(message, shadowLabRole);
 	const steamVaultRoleMembers = getMembers(message, steamVaultRole);
 	if (message.content.startsWith(botActivateMessageToken)) {
+		console.log(hour);
 		if (hour >= 9 && hour < 12) {
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
