@@ -196,6 +196,7 @@ client.on('messageCreate', async (message) => {
 		let hour = date.getHours();
 		console.log(hour);
 		if (hour >= 9 && hour < 12) {
+			console.log("9-12");
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '9-12'
@@ -210,6 +211,7 @@ client.on('messageCreate', async (message) => {
 			);
 			removeRole(message, role);
 		} else if (hour >= 12 && hour < 15) {
+			console.log("12-15");
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '12-15'
@@ -224,6 +226,7 @@ client.on('messageCreate', async (message) => {
 			);
 			removeRole(message, role);
 		} else if (hour >= 15 && hour < 18) {
+			console.log("15-18");
 			console.log(hour);
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
@@ -239,6 +242,7 @@ client.on('messageCreate', async (message) => {
 			);
 			removeRole(message, role);
 		} else if (hour >= 18 && hour < 21) {
+			console.log("18-21");
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '18-21'
@@ -252,7 +256,8 @@ client.on('messageCreate', async (message) => {
 				(r) => r.name.toLowerCase() === '15-18'
 			);
 			removeRole(message, role);
-		} else if (hour >= 21 && hour < 0) {
+		} else if (hour >= 21 && hour < 24) {
+			console.log("21-0");
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '21-0'
@@ -267,6 +272,7 @@ client.on('messageCreate', async (message) => {
 			);
 			removeRole(message, role);
 		} else if (hour >= 0 && hour < 3) {
+			console.log("0-3");
 			message.guild.members.cache.map((e) => {
 				e.roles.cache.find((role) =>
 					role.name == '0-3'
@@ -281,6 +287,7 @@ client.on('messageCreate', async (message) => {
 			);
 			removeRole(message, role);
 		} else if (hour >= 3 && hour < 6) {
+			console.log("3-6");
 			const role = message.guild.roles.cache.find(
 				(r) => r.name.toLowerCase() === '0-3'
 			);
